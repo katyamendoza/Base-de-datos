@@ -1,101 +1,89 @@
-USE [master]
+USE [FarmaciaV2]
 GO
-
-/****** Object:  Database [Farmacia]    Script Date: 07/09/2018 02:37:28 p. m. ******/
-CREATE DATABASE [Farmacia] ON  PRIMARY 
-( NAME = N'Farmacia', FILENAME = N'c:\Program Files\Microsoft SQL Server\MSSQL10.SQLEXPRESS\MSSQL\DATA\Farmacia.mdf' , SIZE = 3072KB , MAXSIZE = UNLIMITED, FILEGROWTH = 1024KB )
- LOG ON 
-( NAME = N'Farmacia_log', FILENAME = N'c:\Program Files\Microsoft SQL Server\MSSQL10.SQLEXPRESS\MSSQL\DATA\Farmacia_log.ldf' , SIZE = 1024KB , MAXSIZE = 2048GB , FILEGROWTH = 10%)
+/****** Object:  Table [dbo].[Categoria]    Script Date: 07/09/2018 02:37:28 p. m. ******/
+SET ANSI_NULLS ON
 GO
-
-ALTER DATABASE [Farmacia] SET COMPATIBILITY_LEVEL = 100
+SET QUOTED_IDENTIFIER ON
 GO
-
-IF (1 = FULLTEXTSERVICEPROPERTY('IsFullTextInstalled'))
-begin
-EXEC [Farmacia].[dbo].[sp_fulltext_database] @action = 'enable'
-end
+CREATE TABLE [dbo].[Categoria](
+	[cod_cate] [varchar](8) NOT NULL,
+	[nom_des] [varchar](40) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[cod_cate] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 GO
-
-ALTER DATABASE [Farmacia] SET ANSI_NULL_DEFAULT OFF 
+/****** Object:  Table [dbo].[Clientes]    Script Date: 07/09/2018 02:37:28 p. m. ******/
+SET ANSI_NULLS ON
 GO
-
-ALTER DATABASE [Farmacia] SET ANSI_NULLS OFF 
+SET QUOTED_IDENTIFIER ON
 GO
-
-ALTER DATABASE [Farmacia] SET ANSI_PADDING OFF 
+CREATE TABLE [dbo].[Clientes](
+	[cod_cli] [varchar](8) NOT NULL,
+	[nom_cli] [varchar](40) NOT NULL,
+	[dir_cli] [varchar](40) NULL,
+	[cod_dis] [varchar](8) NULL,
+	[sexo] [varchar](1) NOT NULL,
+	[DNI] [int] NULL,
+	[RUC] [int] NULL,
+	[Telefono] [int] NULL,
+	[Celular] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[cod_cli] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 GO
-
-ALTER DATABASE [Farmacia] SET ANSI_WARNINGS OFF 
+/****** Object:  Table [dbo].[Distrito]    Script Date: 07/09/2018 02:37:28 p. m. ******/
+SET ANSI_NULLS ON
 GO
-
-ALTER DATABASE [Farmacia] SET ARITHABORT OFF 
+SET QUOTED_IDENTIFIER ON
 GO
-
-ALTER DATABASE [Farmacia] SET AUTO_CLOSE OFF 
+CREATE TABLE [dbo].[Distrito](
+	[cod_dis] [varchar](8) NOT NULL,
+	[nom_dis] [varchar](40) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[cod_dis] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 GO
-
-ALTER DATABASE [Farmacia] SET AUTO_SHRINK OFF 
+/****** Object:  Table [dbo].[OrdenPedido]    Script Date: 07/09/2018 02:37:28 p. m. ******/
+SET ANSI_NULLS ON
 GO
-
-ALTER DATABASE [Farmacia] SET AUTO_UPDATE_STATISTICS ON 
+SET QUOTED_IDENTIFIER ON
 GO
-
-ALTER DATABASE [Farmacia] SET CURSOR_CLOSE_ON_COMMIT OFF 
+CREATE TABLE [dbo].[OrdenPedido](
+	[num_ordenPedido] [varchar](8) NOT NULL,
+	[fecha] [datetime] NOT NULL,
+	[cod_cli] [varchar](8) NULL,
+	[nom_cli] [varchar](40) NULL,
+	[cod_emp] [varchar](8) NULL,
+	[cod_tipoPago] [varchar](8) NULL,
+	[total] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[num_ordenPedido] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 GO
-
-ALTER DATABASE [Farmacia] SET CURSOR_DEFAULT  GLOBAL 
+/****** Object:  Table [dbo].[Usuario]    Script Date: 07/09/2018 02:37:28 p. m. ******/
+SET ANSI_NULLS ON
 GO
-
-ALTER DATABASE [Farmacia] SET CONCAT_NULL_YIELDS_NULL OFF 
+SET QUOTED_IDENTIFIER ON
 GO
-
-ALTER DATABASE [Farmacia] SET NUMERIC_ROUNDABORT OFF 
+CREATE TABLE [dbo].[Usuario](
+	[cod_usu] [varchar](8) NOT NULL,
+	[cod_emp] [varchar](8) NOT NULL,
+	[nivel_usu] [varchar](2) NOT NULL,
+	[nom_usu] [varchar](30) NOT NULL,
+	[password] [varchar](10) NOT NULL,
+	[activo] [varchar](2) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[cod_usu] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
 GO
-
-ALTER DATABASE [Farmacia] SET QUOTED_IDENTIFIER OFF 
-GO
-
-ALTER DATABASE [Farmacia] SET RECURSIVE_TRIGGERS OFF 
-GO
-
-ALTER DATABASE [Farmacia] SET  DISABLE_BROKER 
-GO
-
-ALTER DATABASE [Farmacia] SET AUTO_UPDATE_STATISTICS_ASYNC OFF 
-GO
-
-ALTER DATABASE [Farmacia] SET DATE_CORRELATION_OPTIMIZATION OFF 
-GO
-
-ALTER DATABASE [Farmacia] SET TRUSTWORTHY OFF 
-GO
-
-ALTER DATABASE [Farmacia] SET ALLOW_SNAPSHOT_ISOLATION OFF 
-GO
-
-ALTER DATABASE [Farmacia] SET PARAMETERIZATION SIMPLE 
-GO
-
-ALTER DATABASE [Farmacia] SET READ_COMMITTED_SNAPSHOT OFF 
-GO
-
-ALTER DATABASE [Farmacia] SET HONOR_BROKER_PRIORITY OFF 
-GO
-
-ALTER DATABASE [Farmacia] SET RECOVERY SIMPLE 
-GO
-
-ALTER DATABASE [Farmacia] SET  MULTI_USER 
-GO
-
-ALTER DATABASE [Farmacia] SET PAGE_VERIFY CHECKSUM  
-GO
-
-ALTER DATABASE [Farmacia] SET DB_CHAINING OFF 
-GO
-
-ALTER DATABASE [Farmacia] SET  READ_WRITE 
-GO
-
 
